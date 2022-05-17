@@ -1,0 +1,39 @@
+g.V().drop()
+g.addV('users').property('name', 'steve').property('id','u2').property('inherit_apps', false).property('pk', 'pk')
+g.addV('users').property('name', 'john').property('id','u1').property('inherit_apps', true).property('inherit_features', true).property('pk', 'pk')
+
+g.addV('customers').property('name', 'biogen').property('id','biogen').property('pk', 'pk')
+g.addV('customers').property('name', 'pfizer').property('id','pfizer').property('pk', 'pk')
+g.addV('applications').property('name', 'sa').property('id','sa').property('pk', 'pk')
+g.addV('applications').property('name', 'blx').property('id','blx').property('pk', 'pk')
+
+g.addV('studies').property('name', 'study1').property('id','study1').property('pk', 'pk')
+g.addV('studies').property('name', 'study2').property('id','study2').property('pk', 'pk')
+g.addV('studies').property('name', 'study3').property('id','study3').property('pk', 'pk')
+
+g.addV('features').property('name', 'documents').property('id','documents').property('pk', 'pk')
+g.addV('features').property('name', 'timeline').property('id','timeline').property('pk', 'pk')
+g.addV('features').property('name', 'estimator').property('id','estimator').property('pk', 'pk')
+
+g.V('u1').addE('customer_of').to(g.V('biogen'))
+g.V('u1').addE('customer_of').to(g.V('pfizer'))
+g.V('u2').addE('customer_of').to(g.V('biogen'))
+
+g.V('biogen').addE('access').to(g.V('sa'))
+g.V('biogen').addE('access').to(g.V('blx'))
+
+g.V('biogen').addE('has_data').to(g.V('study1'))
+g.V('biogen').addE('has_data').to(g.V('study3'))
+g.V('pfizer').addE('access').to(g.V('sa'))
+g.V('pfizer').addE('has_data').to(g.V('study2'))
+
+g.V('blx').addE('has_feature').to(g.V('documents'))
+g.V('blx').addE('has_feature').to(g.V('timeline'))
+
+g.V('sa').addE('has_feature').to(g.V('documents'))
+g.V('sa').addE('has_feature').to(g.V('estimator'))
+
+g.V('sa').addE('has_study').to(g.V('study1'))
+g.V('sa').addE('has_study').to(g.V('study2'))
+g.V('blx').addE('has_study').to(g.V('study3'))
+g.V().count()
